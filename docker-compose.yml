@@ -16,23 +16,6 @@ services:
       timeout: 5s
       retries: 5
 
-  auth-db:
-    image: postgres:18
-    environment:
-      - POSTGRES_USER=auth_user
-      - POSTGRES_PASSWORD=auth_pass
-      - POSTGRES_DB=auth_db
-    volumes:
-      - auth_pgdata:/var/lib/postgresql
-    networks:
-      - my_network
-    restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth_db"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   employee-service:
     container_name: employee-service
     build:
@@ -45,46 +28,6 @@ services:
       - my_network
     env_file:
       - ./employee/.env
-    restart: always
-
-  auth-service:
-    container_name: auth-service
-    build:
-      context: ./auth
-      dockerfile: Dockerfile
-    depends_on:
-      auth-db:
-        condition: service_healthy
-    networks:
-      - my_network
-    env_file:
-      - ./auth/.env
-    restart: always
-
-  frontend-service:
-    container_name: frontend-service
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    networks:
-      - my_network
-    env_file:
-      - ./frontend/.env
-    restart: always
-
-  nginx:
-    container_name: nginx
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    depends_on:
-      - employee-service
-      - auth-service
-      - frontend-service
-    ports:
-      - "80:80"
-    networks:
-      - my_network
     restart: always
 
 networks:
