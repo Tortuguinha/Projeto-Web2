@@ -1,6 +1,4 @@
 class EmployeeDoesntExists extends Error {
-  status;
-
   constructor() {
     super();
     this.status = 404;
@@ -9,4 +7,24 @@ class EmployeeDoesntExists extends Error {
   }
 }
 
-module.exports = { EmployeeDoesntExists };
+class InvalidTokenError extends Error {
+  constructor() {
+    super("Token interno inválido");
+    this.name = "InvalidTokenError";
+    this.status = 404;
+  }
+}
+
+class TokenNotProvidedError extends Error {
+  constructor() {
+    super("Token interno não fornecido");
+    this.name = "TokenNotProvidedError";
+    this.status = 404;
+  }
+}
+
+module.exports = {
+  EmployeeDoesntExists,
+  InvalidTokenError,
+  TokenNotProvidedError,
+};

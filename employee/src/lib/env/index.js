@@ -5,6 +5,8 @@ const { z } = require("zod");
 const envSchema = z.object({
   NODE_ENV: z.enum(["test", "dev", "default"]).default("default"),
   PORT: z.coerce.number().default(4000),
+  INTERNAL_SECRET_KEY: z.string(),
+  JWT_SECRET: z.string(),
 });
 
 const _envSchema = envSchema.safeParse(process.env);

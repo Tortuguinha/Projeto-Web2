@@ -1,6 +1,4 @@
 class EmployeeAlreadyExists extends Error {
-  status;
-
   constructor() {
     super();
     this.status = 409;
