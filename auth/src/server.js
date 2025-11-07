@@ -1,9 +1,6 @@
-const cookieParser = require("cookie-parser");
 const http = require("node:http");
 const { AppServer } = require("./app");
 const { _env } = require("./lib/env");
-
-AppServer.use(cookieParser());
 
 const server = http.createServer(AppServer);
 

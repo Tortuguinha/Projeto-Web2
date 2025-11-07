@@ -9,13 +9,9 @@ class JWTPrismaRepository {
     try {
       const session = await prisma.authSession.create({
         data: {
+          employeeId: data.id,
           refreshToken: data.refreshToken,
           expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-          employee: {
-            connect: {
-              id: data.id,
-            },
-          },
         },
       });
 

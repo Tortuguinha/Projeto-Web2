@@ -9,7 +9,7 @@ datasource db {
 
 model AuthSession {
   id           Int       @id @default(autoincrement())
-  employeeId   Int       @unique
+  employeeId   Int // sem @relation
   refreshToken String    @unique
   ipAddress    String?
   userAgent    String?
@@ -17,8 +17,6 @@ model AuthSession {
   createdAt    DateTime  @default(now())
   revokedAt    DateTime?
   revoked      Boolean   @default(false)
-
-  employee EmployeeRef @relation(fields: [employeeId], references: [id])
 }
 
 model LoginAttempt {
@@ -29,13 +27,4 @@ model LoginAttempt {
   ipAddress  String?
   userAgent  String?
   createdAt  DateTime @default(now())
-
-  employee EmployeeRef? @relation(fields: [employeeId], references: [id])
-}
-
-model EmployeeRef {
-  id           Int            @id
-  email        String         @unique
-  AuthSession  AuthSession[]
-  LoginAttempt LoginAttempt[]
 }

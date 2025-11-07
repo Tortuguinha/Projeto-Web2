@@ -1,7 +1,19 @@
 const express = require("express");
-const app = express();
 const { EmployeeRoutes } = require("./http/controllers/routes");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
+const app = express();
+
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "HEAD", "POST", "PATCH", "PUT", "DELETE"],
+  })
+);
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
