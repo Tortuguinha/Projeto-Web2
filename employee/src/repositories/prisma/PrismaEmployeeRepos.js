@@ -33,7 +33,7 @@ class PrismaEmployeeRepos {
     //Procura o usuário através do e-mail
     const employee = await prisma.employee.findUnique({
       where: {
-        email: value,
+        email: value.email,
       },
       select: {
         id: true,

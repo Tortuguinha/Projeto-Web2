@@ -1,4 +1,5 @@
 const { hashPwd } = require("../utils/hashPwd");
+const { EmployeeAlreadyExists } = require("../http/errors/RegisterErrorHandle");
 
 class RegisterUseCase {
   #employeePrismaRepository;
@@ -15,7 +16,7 @@ class RegisterUseCase {
 
     // Se já existe, retorna o erro.
     if (userAlreadyExists) {
-      throw new Error("O usuário já existe");
+      throw new EmployeeAlreadyExists();
     }
 
     // Criptografa a senha do usuário

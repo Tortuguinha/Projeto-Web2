@@ -24,9 +24,10 @@ async function RegisterController(req, res) {
       message: "Usuário criado com sucesso!",
     });
   } catch (err) {
-    res.status(500).json({
-      error: err,
-      message: "Internal Server Error",
+    const status = err.status || 500;
+
+    res.status(status).json({
+      message: err.message || "Ocorreu um erro inesperado.",
     });
   }
 }
