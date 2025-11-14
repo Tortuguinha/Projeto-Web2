@@ -33,7 +33,7 @@ const SidebarIcon = ({ icon: Icon, className, ...props }) => {
 	)
 }
 
-const SidebarLink = ({ href, label, icon: Icon, className, ...props }) => {
+const SidebarLink = ({ href, label, icon: Icon, iconWidth, iconHeight, className, ...props }) => {
 	return (
 		<Link
 			{...props}
@@ -65,7 +65,7 @@ const SidebarButton = ({ handleSubmit, label, icon: Icon, className, ...props })
 	)
 }
 
-const SidebarButtonMenu = ({ handleSubmit, color, width, height, className, ...props }) => {
+const SidebarButtonMenu = ({ handleSubmit, label, color, width, height, className, ...props }) => {
 	return (
 		<button
 			{...props}

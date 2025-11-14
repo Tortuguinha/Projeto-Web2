@@ -1,9 +1,11 @@
 import { useState } from "react";
 import employeeApi from "../../api/employeeApi";
 import { FaCheck, FaExclamation } from "react-icons/fa";
+import { useAlert } from "../../context/AlertContext";
 import Form from "../../components/Form";
 
 function SignUpPage() {
+  const { showAlert } = useAlert();
 
   const [registerData, setRegisterData] = useState({
     fullName: "",
@@ -22,7 +24,7 @@ function SignUpPage() {
     try {
       const emptyFields = Object.keys(registerData).filter(key => !registerData[key]);
       if (emptyFields.length > 0) {
-        console.log("error", "Por favor, preencha todos os campos!", FaExclamation);
+        showAlert("error", "Por favor, preencha todos os campos!", FaExclamation);
         return;
       }
 
@@ -34,7 +36,7 @@ function SignUpPage() {
         confirmPassword: registerData.confirmPassword,
       })
 
-      console.log("success", "Operação concluída com sucesso!", FaCheck);
+      showAlert("success", "Operação concluída com sucesso!", FaCheck);
 
       setRegisterData({
         fullName: "",
@@ -46,7 +48,7 @@ function SignUpPage() {
 
     } catch (err) {
       console.error(err);
-      console.log("error", "Ocorreu um erro no cadastro.", FaExclamation);
+      showAlert("error", "Ocorreu um erro no cadastro.", FaExclamation);
     } finally {
       setLoading(false);
     }

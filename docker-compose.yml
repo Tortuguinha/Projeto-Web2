@@ -33,7 +33,7 @@ services:
       timeout: 5s
       retries: 5
 
-  employee-service:
+  employee-service: # Serviço de Empregado
     container_name: employee-service
     build:
       context: ./employee
@@ -47,7 +47,7 @@ services:
       - ./employee/.env
     restart: always
 
-  auth-service:
+  auth-service: # Serviço de Autenticação
     container_name: auth-service
     build:
       context: ./auth
@@ -61,7 +61,7 @@ services:
       - ./auth/.env
     restart: always
 
-  nginx:
+  nginx: # Load Balancer
     container_name: nginx
     build:
       context: ./nginx

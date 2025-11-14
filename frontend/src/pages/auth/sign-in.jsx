@@ -1,6 +1,11 @@
 import { useState } from "react";
 import Form from "../../components/Form";
+import { useDispatch } from "react-redux"
+import { setAuth } from "../../redux/user/employeeSlice"
+import { useAlert } from "../../context/AlertContext";
 import { FaExclamation, FaCheck } from "react-icons/fa"
+import { isValidEmail } from "../../utils/email-regex"
+import employeeAPI from "../../api/employeeApi"
 
 function SignInPage() {
 
@@ -9,26 +14,45 @@ function SignInPage() {
 		password: "",
 	})
 
+	const { showAlert } = useAlert();
 
 	const [loading, setLoading] = useState(false)
 
+	const dispatch = useDispatch()
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
 
 		if (!signInData.email || !signInData.password) {
-			console.log("error", "Por favor, preencha todos os campos!", FaExclamation);
+			showAlert("error", "Por favor, preencha todos os campos!", FaExclamation);
 			return;
         }
 
+		if(!isValidEmail(signInData.email)) {
+			showAlert("error", "E-mail inválido", FaExclamation);
+			return;
+		}
+
 		try {
 			setLoading(true)
-			console.log("success", "Logado com sucesso!", FaCheck)
+
+			const { data } = await employeeAPI.loginEmployee({
+				email: signInData.email,
+				password: signInData.password
+			})
+
+			dispatch(setAuth(data))
+
+			showAlert("success", "Logado com sucesso!", FaCheck)
 
 
 		} catch(err) {
 			console.error(err)
-
+			showAlert(
+				"error",
+				err?.response?.data?.err || "Ocorreu um erro ao tentar logar.",
+				FaExclamation
+				)
 
 		} finally {
 			setLoading(false)
