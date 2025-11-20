@@ -2,7 +2,18 @@ const { prisma } = require("../../lib/prisma");
 const employeeAPI = require("../../api/employeeApi");
 
 class JWTPrismaRepository {
-  async remove() {}
+  async remove(data) {
+    try {
+      const session = await prisma.authSession.deleteMany({
+        where: {
+          refreshToken: data.refreshToken
+        }
+      })
+
+      
+      return session;
+    } catch(err) {}
+  }
 
   async store(data) {
     // Armazena apenas os dados de token
