@@ -16,7 +16,7 @@ async function LogoutController() {
 		
 		res.clearCookie('refreshToken', { httpOnly: true, sameSite: "lax", secure: true })
        	res.clearCookie('accessToken', { httpOnly: true, sameSite: "lax", secure: true })
-added
+
         res
             .status(200)
             .json({
